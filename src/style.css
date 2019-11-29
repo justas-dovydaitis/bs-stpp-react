@@ -1,0 +1,22 @@
+body {
+    background-color: #00263E;
+    color: #F97268;
+}
+
+a {
+    color: white;
+}
+
+.wrap-text {
+    float: left;
+}
+
+.btn, .form-control {
+    border-radius: 0;
+    outline: none;
+    border: none;
+}
+
+.btn-primary {
+    background-color: #F97268;
+}
