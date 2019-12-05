@@ -1,12 +1,7 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './style.css';
 
-// const Circle = (props) => {
-//     return <span className={`dot ${props.full ? 'full' : ''}`}></span>
-// };
-// const Stick = () => {
-//     return <span className='stick'></span>
-// }
 const Lolipop = (props) => {
     return (
         <div>
@@ -18,22 +13,30 @@ const Lolipop = (props) => {
 const AgendaItem = (props) => {
 
     return (
+
         <div className='row agenda-item'>
             <div className='col-1 col-md-2 col-lg-1 text-right' >
                 <div className='time'>
-                    10:00am
+                    {new Intl.DateTimeFormat('en-US', {
+                        hour12: true,
+                        hour: 'numeric',
+                        minute: 'numeric'
+                    }).format(new Date(props.starts))}
                 </div>
             </div>
             <div className='col-1 text-center'>
                 <Lolipop />
             </div>
             <div className='col text-left'>
-                <h3>Lorem ipsum dolor sit amet</h3>
+                <Link to={`/lectures/${props._id}`} style={{ color: 'inherit' }} >
+                    <h3>{props.name}</h3>
+                </Link>
                 <div className='pb-3'>
-                    Intrinsicly underwhelm adaptive action items for granular "outside the box" thinking. Rapidiously supply functionalized scenarios for fully researched information. Uniquely recaptiualize cross-media networks without sticky innovation. Rapidiously conceptualize diverse infrastructures after timely methodologies. Objectively create open-source services with dynamic intellectual capital.
+                    {props.shortDescription || 'no description'}
                 </div>
             </div>
         </div>
+
     );
 }
 export default AgendaItem;

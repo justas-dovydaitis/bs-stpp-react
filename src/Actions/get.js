@@ -1,5 +1,6 @@
+/* eslint-disable no-undef */
 import axios from 'axios';
-import { signoutUser } from './index';
+import signoutUser from './signOut';
 import { API_ROOT } from '../config';
 
 export default function apiGet(slug, headers, type) {
@@ -10,7 +11,7 @@ export default function apiGet(slug, headers, type) {
                 Authorization: `JWT ${localStorage.getItem('token')}`,
             }
         }).then((response) => {
-            console.log(type, "Succeded", response.data);
+            console.log(type, 'Succeded', response.data);
             dispatch(apiStore(type, response.data));
         }).catch((error) => {
             if (error.response.status === 401) {

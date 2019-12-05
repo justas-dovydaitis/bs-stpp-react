@@ -1,3 +1,20 @@
 .speaker.info {
     display: inline-block !important;
 }
+.speaker-image {
+    width: 200px;
+    height: 200px;
+}
+.speaker-name-page{
+    font-size: 6rem;
+}
+@media only screen and (max-width: 1200px){
+    .speaker-name-page{
+        font-size: 5rem;
+    }
+}
+@media only screen and (max-width: 992px){
+    .speaker-name-page{
+        font-size: 4rem;
+    }
+}

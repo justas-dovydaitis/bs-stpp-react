@@ -1,23 +1,63 @@
 import React from 'react';
-import { Speaker } from '../Speakers';
+import Speaker  from '../Speakers/SpeakerSmall';
+import { connect } from 'react-redux';
+import { actionTypes as AC } from '../../Actions';
+import fetchApi from '../../Actions/get';
+const mapStateToProps = state => ({
+    lecture: state.agenda.currentLecture,
+    speakers: state.agenda.currentLectureSpeakers
+});
+const mapDispatchToProps = dispatch => ({
+    fetchApi: (slug, headers, type) => dispatch(fetchApi(slug, headers, type)),
+});
 
 class Lecture extends React.Component {
     constructor(props) {
         super(props);
+        let { id } = this.props.match.params;
+
+        if (!this.props.lecture || this.props.lecture._id !== id)
+            this.props.fetchApi(`/lectures/${id}`, {}, AC.SET_CURRENT_LECTURE)
+                .then(() => {
+                    this.props.fetchApi(`/lectures/${id}/speakers/`, {}, AC.SET_CURRENT_LECTURE_SPEAKERS)
+                });
+
+        this.mapSpeakers = this.mapSpeakers.bind(this);
+    }
+    mapSpeakers() {
+        return this.props.speakers.map((speaker, key = 0) => {
+            return <div className='col-6 col-md-4 col-lg-3'><Speaker key={key++} {...speaker} /></div>
+        })
     }
     render() {
+        console.log(this.props.lecture)
         return (
+
             <div className='container lecture'>
                 <div className='row'>
                     <h1 className='display-1 mt-5'>
-                        Ted Neward @tedneward - Modern Architecture {/*title*/}
+                        {this.props.lecture && this.props.lecture.name}
                     </h1>
                 </div>
                 <div className='row my-3'>
                     <div className='col'>
                         {/*time and place*/}
                         <div className='row font-weight-bold'>
-                            Saturday, May 4 10:10am - 11:10am
+                            {this.props.lecture && new 
+                                Intl.DateTimeFormat('en-US', {
+                                    weekday: 'long', 
+                                    month: 'long', 
+                                    day: 'numeric',
+                                    hour12:true,
+                                    hour: 'numeric', 
+                                    minute: 'numeric'
+                            }).format(new Date(this.props.lecture.starts))} - {this.props.lecture && new 
+                                Intl.DateTimeFormat('en-US', {
+                                    hour12:true,
+                                    hour: 'numeric', 
+                                    minute: 'numeric'
+                            }).format(new Date(this.props.lecture.ends))}
+                            
                         </div>
                         <div className='row font-weight-bold'>
                             Alpha
@@ -27,22 +67,19 @@ class Lecture extends React.Component {
                         1 2 3
                  </div>
                 </div>
-                <div className='row my-3'>
-                    Distinctively disseminate seamless intellectual capital whereas prospective systems. Phosfluorescently enable prospective ROI through market-driven leadership. Completely visualize timely convergence without revolutionary sources. Progressively supply client-based supply chains after fully tested intellectual capital. Dramatically orchestrate frictionless catalysts for change without proactive markets.
-                    Quickly scale seamless alignments with fully tested intellectual capital. Authoritatively transform multimedia based value for turnkey ROI. Dynamically engineer interactive users after stand-alone communities. Energistically strategize frictionless vortals and 24/7 schemas. Rapidiously synthesize.
-                    Distinctively disseminate seamless intellectual capital whereas prospective systems. Phosfluorescently enable prospective ROI through market-driven leadership. Completely visualize timely convergence without revolutionary sources. Progressively supply client-based supply chains after fully tested intellectual capital. Dramatically orchestrate frictionless catalysts for change without proactive markets.
-                    Quickly scale seamless alignments with fully tested intellectual capital. Authoritatively transform multimedia based value for turnkey ROI. Dynamically engineer interactive users after stand-alone communities. Energistically strategize frictionless vortals and 24/7 schemas. Rapidiously synthesize.
+                <div className='row my-3' 
+                    dangerouslySetInnerHTML={{__html: this.props.lecture ? this.props.lecture.description : ''}
+                }>
                 </div>
                 <div className='row'>
                     <h3 className='font-weight-bold'>Speakers:</h3>
                 </div>
                 <div className='row'>
-                    <Speaker />
-                    <Speaker />
+                    {this.mapSpeakers()}
                 </div>
             </div>
         )
     }
 }
 
-export default Lecture;
+export default connect(mapStateToProps, mapDispatchToProps)(Lecture);

@@ -6,6 +6,10 @@ body {
 a {
     color: white;
 }
+a:hover {
+    text-decoration: none;
+    color: inherit;
+}
 
 .wrap-text {
     float: left;
@@ -19,4 +23,10 @@ a {
 
 .btn-primary {
     background-color: #F97268;
+}
+hr { 
+    background:none repeat scroll 0 0 #F97268;
+    margin:1em 0;
+    clear: both;
+    width:100%;
 }
