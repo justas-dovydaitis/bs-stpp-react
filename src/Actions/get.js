@@ -14,7 +14,7 @@ export default function apiGet(slug, headers, type) {
             console.log(type, 'Succeded', response.data);
             dispatch(apiStore(type, response.data));
         }).catch((error) => {
-            if (error.response.status === 401) {
+            if (error.response && error.response.status === 401) {
                 dispatch(signoutUser());
             }
             console.log(error.response);

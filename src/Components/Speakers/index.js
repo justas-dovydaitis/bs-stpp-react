@@ -32,7 +32,7 @@ class Speakers extends React.Component {
     render() {
         return (
             <div className="container">
-                <h1 className='display-1 font-weight-bold mt-5'> Speakers </h1>
+                <h1 className='display-1 font-weight-bold mt-5 text-upercase'> SPEAKERS </h1>
                 <div className='container'>
                     {this.mapSpeakers()}
                 </div>

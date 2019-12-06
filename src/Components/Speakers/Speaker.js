@@ -26,8 +26,6 @@ class Speaker extends React.Component {
                 .then(() => {
                     this.props.fetchApi(`/speakers/${id}/lectures/`, {}, AC.SET_CURRENT_SPEAKER_LECTURES)
                 });
-
-        // this.mapLectures = this.mapLectures.bind(this);
     }
     mapLectures = () => {
         return this.props.lectures.map((lecture, key = 0) => {
