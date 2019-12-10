@@ -56,7 +56,7 @@ class Agenda extends React.Component {
                     <title>Agenda</title>
                     <meta name="description" content="Buildstuff 2019 Agenda" />
                 </Helmet>
-                <h1 className='display-1 font-weight-bold mt-5'> AGENDA </h1>
+                <h1 className='page-name font-weight-bold mt-md-5 text-upercase'> AGENDA </h1>
                 <AgendaNav
                     navItems={this.props.agendaNavItems}
                     active={this.props.agendaActivePlace}

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet'
 
 import Image from '../Image';
-
+import NotFound from "../NotFound";
 import fetchApi from '../../Actions/get';
 import { actionTypes as AC } from '../../Actions';
 
@@ -66,29 +66,32 @@ class Speaker extends React.Component {
     render = () => {
         return (
             <div className='container mt-5'>
-                <Helmet>
-                    <title>{`Speaker|${this.props.speaker && this.props.speaker.name}`}</title>
-                    <meta name='description' content='Create a place' />
-                </Helmet>
-                <div className='row'>
-                    <div className='mx-auto image-fluid col-lg-3 col-md-4 col-6'>
-                        <Image className='img-fluid' src={this.props.speaker && (this.props.speaker.image || 'https://acaweb.org/wp-content/uploads/2018/12/profile-placeholder.png')} alt='placeholder' />
-                    </div>
-                    <div className='col pl-lg-5 pl-md-5'>
-                        <div className='row'>
-                            <h1 className='speaker-name-page mx-auto mx-md-0' >{this.props.speaker && this.props.speaker.name}</h1>
+                {!this.props.speaker ? <NotFound message="Sorry, speaker not found :(" /> : <div>
+                    <Helmet>
+                        <title>{`Speaker|${this.props.speaker && this.props.speaker.name}`}</title>
+                        <meta name='description' content='Create a place' />
+                    </Helmet>
+                    <div className='row'>
+                        <div className='mx-auto image-fluid col-lg-3 col-md-4 col-6'>
+                            <Image className='img-fluid' src={this.props.speaker && (this.props.speaker.image || 'https://acaweb.org/wp-content/uploads/2018/12/profile-placeholder.png')} alt='placeholder' />
                         </div>
-                        <div className='row'>
-                            <div className='font-weight-bolder my-3 mx-auto mx-md-0'>{this.props.speaker && this.props.speaker.job}</div>
+                        <div className='col pl-lg-5 pl-md-5'>
+                            <div className='row'>
+                                <h1 className='page-name mx-auto mx-md-0' >{this.props.speaker && this.props.speaker.name}</h1>
+                            </div>
+                            <div className='row'>
+                                <div className='font-weight-bolder my-3 mx-auto mx-md-0'>{this.props.speaker && this.props.speaker.job}</div>
+                            </div>
                         </div>
                     </div>
+                    <div className='row mt-5' dangerouslySetInnerHTML={{ __html: this.props.speaker && this.props.speaker.description }}>
+                    </div>
+                    <div className='row my-5'>
+                        <h3 className='font-weight-bold'>Lectures:</h3>
+                        {this.props.lectures && this.mapLectures()}
+                    </div>
                 </div>
-                <div className='row mt-5' dangerouslySetInnerHTML={{ __html: this.props.speaker && this.props.speaker.description }}>
-                </div>
-                <div className='row my-5'>
-                    <h3 className='font-weight-bold'>Lectures:</h3>
-                    {this.props.lectures && this.mapLectures()}
-                </div>
+                }
             </div>
         )
     }

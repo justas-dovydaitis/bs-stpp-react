@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import axios from 'axios';
-import signoutUser from './signOut';
+import setJWTexpiredVisibility from './setJWTexpiredVisibility'
 import { API_ROOT } from '../config';
 
 export default function apiGet(slug, headers, type) {
@@ -15,7 +15,7 @@ export default function apiGet(slug, headers, type) {
             dispatch(apiStore(type, response.data));
         }).catch((error) => {
             if (error.response && error.response.status === 401) {
-                dispatch(signoutUser());
+                dispatch(setJWTexpiredVisibility(true));
             }
             console.log(error.response);
         });

@@ -1,10 +1,13 @@
 import React from 'react';
 
 
-const NotFound = () => {
+const NotFound = (props) => {
     return (
-        <div className=''>
-            <h1 className='mx-auto display-1'>404</h1>
+        <div className='container-fluid'>
+            <div className='vertical-center horizontal-center text-center'>
+                <h1 className='page-name'>404</h1>
+                <strong>{props.message}</strong>
+            </div>
         </div>
     )
 }

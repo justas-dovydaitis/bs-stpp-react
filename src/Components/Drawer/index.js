@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Drawer from '@material-ui/core/Drawer';
+import Swipeabledrawer from '@material-ui/core/SwipeableDrawer';
 import IconButton from '@material-ui/core/IconButton';
 import List from '@material-ui/core/List';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Divider from '@material-ui/core/Divider';
+import Hidden from '@material-ui/core/Hidden';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import NavLink from './NavLink';
@@ -37,9 +39,11 @@ const useStyles = makeStyles(theme => ({
         backgroundColor: '#F97268',
     },
     drawer: {
+
         width: drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
+
     },
     drawerOpen: {
         width: drawerWidth,
@@ -74,25 +78,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
     toggleDrawer: (open) => dispatch(toggleDrawer(open))
 })
-
-const MyDrawer = (props) => {
+const DrawerContent = (props) => {
     const classes = useStyles();
     return (
-        <Drawer
-            variant="permanent"
-            className={clsx(classes.drawer, {
-                [classes.drawerOpen]: props.drawer.open,
-                [classes.drawerClose]: !props.drawer.open,
-            })}
-            classes={{
-                paper: clsx({
-                    [classes.drawerPaper]: true,
-                    [classes.drawerOpen]: props.drawer.open,
-                    [classes.drawerClose]: !props.drawer.open,
-                }),
-            }}
-            open={props.drawer.open}
-        >
+        <div>
             <div className={classes.toolbar}>
                 <div className='w-100 text-center text-white overflow-hidden' style={{ fontSize: 20 }}>BUILD STUFF</div>
                 <IconButton onClick={() => props.toggleDrawer(!props.drawer.open)}>
@@ -126,8 +115,53 @@ const MyDrawer = (props) => {
                     <NavLink to='/signup'>Sing up</NavLink>
                 </AccessControl>
             </List>
-        </Drawer>
+        </div>
     )
 }
+
+const MyDrawer = (props) => {
+    const classes = useStyles();
+    return (
+        <div>
+
+            <Hidden xsDown implementation="js">
+                <Drawer
+                    variant="permanent"
+                    className={clsx(classes.drawer, {
+                        [classes.drawerOpen]: props.drawer.open,
+                        [classes.drawerClose]: !props.drawer.open,
+                    })}
+                    classes={{
+                        paper: clsx({
+                            [classes.drawerPaper]: true,
+                            [classes.drawerOpen]: props.drawer.open,
+                            [classes.drawerClose]: !props.drawer.open,
+                        }),
+                    }}
+                    open={props.drawer.open}
+                >
+
+                    <DrawerContent {...props} />
+                </Drawer>
+            </Hidden>
+            <Hidden smUp implementation="js">
+                <Swipeabledrawer
+                    onClose={() => props.toggleDrawer(false)}
+                    onOpen={() => props.toggleDrawer(true)}
+                    open={props.drawer.open}
+                    classes={{
+                        paper: clsx({
+                            [classes.drawerPaper]: true,
+                        })
+                    }}
+                >
+                    <DrawerContent {...props} />
+                </Swipeabledrawer>
+            </Hidden>
+        </div>
+    )
+}
+
+
 export default connect(mapStateToProps, mapDispatchToProps)(MyDrawer);
 export { NavLink };

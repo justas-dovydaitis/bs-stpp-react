@@ -1,14 +1,18 @@
 import React from 'react';
-import Drawer from './Components/Drawer';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 import { updateDrawer } from './Actions/toggleDrawer';
+
+import Drawer from './Components/Drawer';
+import ErrorModal from './Components/Authorization/Modal';
 import History from './history';
 
 const useStyles = makeStyles(theme => ({
   content: {
     flexGrow: 1,
-    padding: theme.spacing(3),
+    [theme.breakpoints.up('sm')]: {
+      padding: theme.spacing(3),
+    }
   },
 }));
 
@@ -22,20 +26,21 @@ const mapDispatchToProps = dispatch => ({
 const App = (props) => {
   // eslint-disable-next-line
   const unlisten = History.listen((location, action) => {
+    console.log(location, action)
     props.updateDrawer();
   });
   const classes = useStyles();
-  console.log('DRAWER', props.drawer);
   return (
-    <div>
-      <div className="container mt-0">
-        <div className="d-flex">
-          <Drawer update={props.drawer.update} />
-          <main className={classes.content}>
-            {props.children}
-          </main>
-        </div>
+    <div className='container'>
+      <ErrorModal />
+      <div className="d-flex">
+        <Drawer update={props.drawer.update} />
+        <main className={classes.content}>
+          <ErrorModal />
+          {props.children}
+        </main>
       </div>
+
     </div>
   );
 }

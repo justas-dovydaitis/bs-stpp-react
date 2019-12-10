@@ -100,8 +100,8 @@ class CreateLectureForm extends React.Component {
                 <div className='row'>
                     <h1 className='text-uppercase my-5'>Create Lecture</h1>
                 </div>
-                <div className='row'>
-                    <form onSubmit={this.handleSubmit}>
+                <div className='row '>
+                    <form onSubmit={this.handleSubmit} className='w-100'>
 
                         <div className="form-group">
                             <label htmlFor="title">Title</label>

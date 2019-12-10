@@ -14,7 +14,7 @@ export default function apiDelete(slug, headers, id) {
         }).catch((error) => {
             console.log(error);
             if (error.response.status === 401) {
-                dispatch(signoutUser());
+                dispatch(setJWTexpiredVisibility(true));
             }
         });
     }

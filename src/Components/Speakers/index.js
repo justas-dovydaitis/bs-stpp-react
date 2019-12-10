@@ -3,12 +3,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 // Components
-import Speaker from './SpeakerMedium';
+import SpeakerMd from './SpeakerMedium';
+import SpeakerSm from './SpeakerSmall';
 // Actions
 import fetchApi from '../../Actions/get';
 import { actionTypes as AC } from '../../Actions';
 //Styles
 import './style.css';
+import { Hidden } from '@material-ui/core';
 
 const mapStateToProps = state => ({
     speakers: state.speakers.speakers
@@ -27,17 +29,25 @@ class Speakers extends React.Component {
 
     mapSpeakers() {
         return this.props.speakers.map((speaker, key = 0) => {
-            return <Speaker key={key++} {...speaker} />
+            return <div>
+                <Hidden smDown implementation="js" >
+                    <SpeakerMd key={key++} {...speaker} />
+                </Hidden>
+                <Hidden smUp implementation="js" >
+                    <SpeakerSm key={key++} {...speaker} />
+                </Hidden>
+            </div>
+
         })
     }
     render() {
         return (
-            <div className="container">
+            <div className="container-fluid">
                 <Helmet>
                     <title>Speakers</title>
                     <meta name='description' content='Buildstuff 2019 speakers' />
                 </Helmet>
-                <h1 className='display-1 font-weight-bold mt-5 text-upercase'> SPEAKERS </h1>
+                <h1 className='page-name font-weight-bold mt-md-5 text-upercase'> SPEAKERS </h1>
                 <div className='container'>
                     {this.mapSpeakers()}
                 </div>
@@ -49,4 +59,4 @@ class Speakers extends React.Component {
 
 export default connect(mapStateToProps, mapDispatchToProps)(Speakers);
 
-export { Speaker };
+export { SpeakerMd, SpeakerSm };

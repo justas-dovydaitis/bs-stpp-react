@@ -13,7 +13,6 @@ const Lolipop = (props) => {
 const AgendaItem = (props) => {
 
     return (
-
         <div className='row agenda-item'>
             <div className='col-1 col-md-2 col-lg-1 text-right' >
                 <div className='time'>
@@ -28,7 +27,7 @@ const AgendaItem = (props) => {
                 <Lolipop />
             </div>
             <div className='col text-left'>
-                <Link to={`/lectures/${props._id}`} style={{ color: 'inherit' }} >
+                <Link to={`/lectures/${props._id}`} style={{ color: 'white' }} >
                     <h3>{props.name}</h3>
                 </Link>
                 <div className='pb-3'>

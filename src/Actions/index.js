@@ -13,5 +13,6 @@ const actionTypes = {
     AUTH_USER: "AUTH_USER",
     SIGN_UP: "SIGN_UP",
     SIGN_IN: "SIGN_IN",
+    SET_JWT_EXPIRED_VISIBILITY: "SET_JWT_EXPIRED_VISIBILITY",
 }
 export { actionTypes };
