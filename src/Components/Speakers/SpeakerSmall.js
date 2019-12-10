@@ -13,8 +13,8 @@ const Speaker = (props) => {
                     src={props.image || 'https://acaweb.org/wp-content/uploads/2018/12/profile-placeholder.png'}
                     alt='speaker image'
                 />
-                <h2 className='mb-0'>{props.name}</h2>
-                <div className='font-weight-bolder my-3'>{props.job}</div>
+                <h2 className='w-100 mb-0 text-center'>{props.name}</h2>
+                <div className='w-100 text-center font-weight-bolder my-3'>{props.job}</div>
             </Link >
         </div >
     )
