@@ -35,7 +35,7 @@ class Lecture extends React.Component {
     render() {
         return (
             <div className='container lecture'>
-                {!this.props.currentLecture ? <NotFound message="Sorry, lecture not found" /> : <div>
+                {!this.props.lecture ? <NotFound message="Sorry, lecture not found" /> : <div>
                     <Helmet>
                         <title>{this.props.lecture && this.props.lecture.name}</title>
                         <meta name='description' content={this.props.lecture && this.props.lecture.description} />

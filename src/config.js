@@ -1,1 +1,1 @@
-export const API_ROOT = 'http://192.168.0.106:8000/api';
+export const API_ROOT = 'https://buildstuff-backend.herokuapp.com/api';

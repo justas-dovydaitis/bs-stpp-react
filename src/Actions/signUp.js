@@ -1,5 +1,7 @@
 import axios from 'axios';
 import History from '../history.js';
+import jwt_decode from 'jwt-decode';
+import Cookie from 'js-cookie';
 import { actionTypes } from './index';
 import authError from './authError';
 import { API_ROOT } from '../config';
@@ -14,8 +16,8 @@ const signupUser = (credentials) => {
                 name: credentials.name
             })
             .then(response => {
-                localStorage.setItem('token', response.data.token);
-                dispatch({ type: actionTypes.AUTH_USER });
+                localStorage.setItem('accessToken', response.data.accessToken);
+                Cookie.set('refreshToken', response.data.refreshToken, { expires: new Date(jwt_decode(response.data.refreshToken).exp * 1000) })
                 History.push('/');
             })
             .catch(err => {

@@ -11,7 +11,8 @@ export default function apiPush(slug, headers, body) {
                 'Content-Type': 'application/json',
                 credentials: 'include'
                 // Authorization: `JWT ${localStorage.getItem('token')}`,
-            }
+            },
+            crossDomain: true
         }).then((response) => {
             setTimeout()
             console.log('POST', body, "Succeded", response);

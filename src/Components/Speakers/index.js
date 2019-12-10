@@ -29,12 +29,12 @@ class Speakers extends React.Component {
 
     mapSpeakers() {
         return this.props.speakers.map((speaker, key = 0) => {
-            return <div>
-                <Hidden smDown implementation="js" >
-                    <SpeakerMd key={key++} {...speaker} />
+            return <div key={key++}>
+                <Hidden xsDown implementation="js" >
+                    <SpeakerMd  {...speaker} />
                 </Hidden>
                 <Hidden smUp implementation="js" >
-                    <SpeakerSm key={key++} {...speaker} />
+                    <SpeakerSm  {...speaker} />
                 </Hidden>
             </div>
 
