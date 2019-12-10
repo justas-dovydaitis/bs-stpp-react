@@ -1,6 +1,7 @@
 import React from 'react';
-import Speaker  from '../Speakers/SpeakerSmall';
+import Speaker from '../Speakers/SpeakerSmall';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 import { actionTypes as AC } from '../../Actions';
 import fetchApi from '../../Actions/get';
 const mapStateToProps = state => ({
@@ -34,6 +35,10 @@ class Lecture extends React.Component {
         return (
 
             <div className='container lecture'>
+                <Helmet>
+                    <title>{this.props.lecture && this.props.lecture.name}</title>
+                    <meta name='description' content={this.props.lecture && this.props.lecture.description} />
+                </Helmet>
                 <div className='row'>
                     <h1 className='display-1 mt-5'>
                         {this.props.lecture && this.props.lecture.name}
@@ -43,21 +48,19 @@ class Lecture extends React.Component {
                     <div className='col'>
                         {/*time and place*/}
                         <div className='row font-weight-bold'>
-                            {this.props.lecture && new 
-                                Intl.DateTimeFormat('en-US', {
-                                    weekday: 'long', 
-                                    month: 'long', 
-                                    day: 'numeric',
-                                    hour12:true,
-                                    hour: 'numeric', 
-                                    minute: 'numeric'
-                            }).format(new Date(this.props.lecture.starts))} - {this.props.lecture && new 
-                                Intl.DateTimeFormat('en-US', {
-                                    hour12:true,
-                                    hour: 'numeric', 
-                                    minute: 'numeric'
+                            {this.props.lecture && new Intl.DateTimeFormat('en-US', {
+                                weekday: 'long',
+                                month: 'long',
+                                day: 'numeric',
+                                hour12: true,
+                                hour: 'numeric',
+                                minute: 'numeric'
+                            }).format(new Date(this.props.lecture.starts))} - {this.props.lecture && new Intl.DateTimeFormat('en-US', {
+                                hour12: true,
+                                hour: 'numeric',
+                                minute: 'numeric'
                             }).format(new Date(this.props.lecture.ends))}
-                            
+
                         </div>
                         <div className='row font-weight-bold'>
                             Alpha
@@ -67,9 +70,9 @@ class Lecture extends React.Component {
                         1 2 3
                  </div>
                 </div>
-                <div className='row my-3' 
-                    dangerouslySetInnerHTML={{__html: this.props.lecture ? this.props.lecture.description : ''}
-                }>
+                <div className='row my-3'
+                    dangerouslySetInnerHTML={{ __html: this.props.lecture ? this.props.lecture.description : '' }
+                    }>
                 </div>
                 <div className='row'>
                     <h3 className='font-weight-bold'>Speakers:</h3>

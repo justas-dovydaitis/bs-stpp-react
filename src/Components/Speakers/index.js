@@ -1,6 +1,7 @@
 // Modules
 import React from 'react';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 // Components
 import Speaker from './SpeakerMedium';
 // Actions
@@ -32,6 +33,10 @@ class Speakers extends React.Component {
     render() {
         return (
             <div className="container">
+                <Helmet>
+                    <title>Speakers</title>
+                    <meta name='description' content='Buildstuff 2019 speakers' />
+                </Helmet>
                 <h1 className='display-1 font-weight-bold mt-5 text-upercase'> SPEAKERS </h1>
                 <div className='container'>
                     {this.mapSpeakers()}

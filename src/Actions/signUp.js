@@ -7,19 +7,20 @@ import { API_ROOT } from '../config';
 const signupUser = (credentials) => {
     return (dispatch) => {
         // submit email/password to the server
-        axios.post(`${API_ROOT}/rest/team/`,
+        axios.post(`${API_ROOT}/users/`,
             {
-                username: credentials.username,
+                email: credentials.email,
                 password: credentials.password,
-                key: '000'
+                name: credentials.name
             })
             .then(response => {
-                dispatch({ type: actionTypes.AUTH_USER });
                 localStorage.setItem('token', response.data.token);
+                dispatch({ type: actionTypes.AUTH_USER });
                 History.push('/');
             })
             .catch(err => {
-                dispatch(authError(err.response.data.error));
+                if (err.response)
+                    dispatch(authError(err.response.data.error));
             });
     };
 };

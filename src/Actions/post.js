@@ -9,10 +9,12 @@ export default function apiPush(slug, headers, body) {
             headers: {
                 ...headers,
                 'Content-Type':'application/json',
+                credentials: 'include'
                 // Authorization: `JWT ${localStorage.getItem('token')}`,
             }
         }).then((response) => {
-            console.log('POST', body, "Succeded", response.data);
+            setTimeout()
+            console.log('POST', body, "Succeded", response);
             return response;
         }).catch((error) => {
             console.log(error);

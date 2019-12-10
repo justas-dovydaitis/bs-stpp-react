@@ -7,5 +7,11 @@ const toggleDrawer = (state) => {
         payload: state
     };
 };
+const updateDrawer = () => {
+    return {
+        type: actionTypes.UPDATE_DRAWER,
+    }
+}
 
 export default toggleDrawer;
+export { updateDrawer };

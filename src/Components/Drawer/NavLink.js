@@ -9,15 +9,13 @@ const NavLink = (props) => {
     return (
         <Link to={props.to}>
             <ListItem button>
-                <ListItemIcon>
-                    {props.icon}
-                </ListItemIcon>
+                <ListItemIcon>{props.icon && props.icon}</ListItemIcon>
                 <ListItemText
-                style={{fontSize: 20}}
-                className='text-uppercase font-weight-bold'
-                disableTypography 
-                primary={props.children} 
-                 />
+                    style={{ fontSize: 20 }}
+                    className='text-uppercase font-weight-bold'
+                    disableTypography
+                    primary={props.children}
+                />
             </ListItem>
         </Link>
     )

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet'
 
 import Image from '../Image';
 
@@ -65,8 +66,14 @@ class Speaker extends React.Component {
     render = () => {
         return (
             <div className='container mt-5'>
+                <Helmet>
+                    <title>{`Speaker|${this.props.speaker && this.props.speaker.name}`}</title>
+                    <meta name='description' content='Create a place' />
+                </Helmet>
                 <div className='row'>
-                    <Image className='mx-auto col-lg-3 col-md-4 col-6' src={this.props.speaker && (this.props.speaker.image || 'https://acaweb.org/wp-content/uploads/2018/12/profile-placeholder.png')} alt='placeholder' />
+                    <div className='mx-auto image-fluid col-lg-3 col-md-4 col-6'>
+                        <Image className='img-fluid' src={this.props.speaker && (this.props.speaker.image || 'https://acaweb.org/wp-content/uploads/2018/12/profile-placeholder.png')} alt='placeholder' />
+                    </div>
                     <div className='col pl-lg-5 pl-md-5'>
                         <div className='row'>
                             <h1 className='speaker-name-page mx-auto mx-md-0' >{this.props.speaker && this.props.speaker.name}</h1>

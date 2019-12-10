@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import signupUser from '../../Actions/signUp';
 import { connect } from 'react-redux';
-
+import { Helmet } from 'react-helmet'
 import logo from '../../Images/buildstuffLogo.png'
 
 const mapStateToProps = (state) => {
@@ -16,6 +16,7 @@ const mapDispatchToProps = dispatch => ({
 class Signup extends PureComponent {
 
     handleFormSubmit(formProps) {
+        console.log(formProps);
         this.props.signupUser(formProps)
     }
 
@@ -44,12 +45,23 @@ class Signup extends PureComponent {
 
         return (
             <div className='auth-wrap'>
+                <Helmet>
+                    <title>Sign up</title>
+                    <meta name="description" content="Buildstuff signup" />
+                </Helmet>
                 <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                     <img src={logo} className='logo' alt='logo' />
                     <fieldset className="form-group">
                         <Field
                             name="email"
                             label="Email"
+                            component={this.renderField}
+                            type="text" />
+                    </fieldset>
+                    <fieldset className="form-group">
+                        <Field
+                            name="name"
+                            label="Name"
                             component={this.renderField}
                             type="text" />
                     </fieldset>

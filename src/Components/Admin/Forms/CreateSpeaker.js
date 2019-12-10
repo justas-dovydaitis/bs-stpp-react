@@ -1,9 +1,9 @@
 import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-// import { EditorState, Modifier } from 'draft-js';
 import draftToHTML from 'draftjs-to-html';
 import Select from 'react-select';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 // Actions
 import fetchApi from '../../../Actions/get';
 import postApi from '../../../Actions/post';
@@ -72,38 +72,49 @@ class CreateSpeakerForm extends React.Component {
     render = () => {
         console.log(this.state.starts)
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="name">Name</label>
-                    <input className="form-control" id="name" name="name" type="text"
-                        onChange={(e) => this.setState({ name: e.target.value })} />
+            <div className="container">
+                <Helmet>
+                    <title>Create Speaker</title>
+                    <meta name="description" content="Create Speaker" />
+                </Helmet>
+                <div className='row'>
+                    <h1 className='text-uppercase my-5'>Create Speaker</h1>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="image">Photo URL</label>
-                    <input className="form-control" id="image" name="image" type="text"
-                        onChange={(e) => this.setState({ image: e.target.value })} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="job">Job title</label>
-                    <input className="form-control" id="job" name="job" type="text"
-                        onChange={(e) => this.setState({ job: e.target.value })} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor="descr">Full description</label>
-                    <EditorComponent className="form-control" id='descr' name='descr'
-                        onContentStateChange={(newState) => { this.setState({ description: newState }) }} />
-                </div>
+                <div className='row'>
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="form-group">
+                            <label htmlFor="name">Name</label>
+                            <input className="form-control" id="name" name="name" type="text"
+                                onChange={(e) => this.setState({ name: e.target.value })} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="image">Photo URL</label>
+                            <input className="form-control" id="image" name="image" type="text"
+                                onChange={(e) => this.setState({ image: e.target.value })} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="job">Job title</label>
+                            <input className="form-control" id="job" name="job" type="text"
+                                onChange={(e) => this.setState({ job: e.target.value })} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="descr">Full description</label>
+                            <EditorComponent className="form-control" id='descr' name='descr'
+                                onContentStateChange={(newState) => { this.setState({ description: newState }) }} />
+                        </div>
 
-                <div className='form-group'>
-                    <label htmlFor='lectures'>Lectures</label>
-                    <Select
-                        isMulti
-                        onChange={this.handleLecturesChange}
-                        options={this.makeLectures()}
-                    />
+                        <div className='form-group'>
+                            <label htmlFor='lectures'>Lectures</label>
+                            <Select
+                                isMulti
+                                onChange={this.handleLecturesChange}
+                                options={this.makeLectures()}
+                            />
+                        </div>
+                        <button type='submit' className='btn btn-primary w-100'>Submit</button>
+                    </form>
                 </div>
-                <button type='submit' className='btn btn-primary w-100'>Submit</button>
-            </form>
+            </div >
         )
     }
 }

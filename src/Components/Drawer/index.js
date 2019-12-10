@@ -14,9 +14,13 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ViewAgendaIcon from '@material-ui/icons/ViewAgenda';
 import PeopleIcon from '@material-ui/icons/People';
 import LockIcon from '@material-ui/icons/Lock';
+
+// import AccountBoxRoundedIcon from '@material-ui/icons/AccountBoxRounded';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import AddLocationIcon from '@material-ui/icons/AddLocation';
 import AddBoxIcon from '@material-ui/icons/AddBox';
+
+import AccessControl, { UserRoles } from '../AccessControl';
 
 import toggleDrawer from '../../Actions/toggleDrawer';
 
@@ -29,7 +33,6 @@ const useStyles = makeStyles(theme => ({
     root: {
         display: 'flex',
     },
-
     drawerPaper: {
         backgroundColor: '#F97268',
     },
@@ -96,23 +99,32 @@ const MyDrawer = (props) => {
                     {props.drawer.open ? <ChevronLeftIcon className='text-white' style={{ fontSize: 40 }} /> : <ChevronRightIcon className='text-white' style={{ fontSize: 40 }} />}
                 </IconButton>
             </div>
-            <Divider class='my-2' />
+            <Divider className='my-2' />
             <List>
                 <NavLink icon={<ViewAgendaIcon className='text-white' style={{ fontSize: 40 }} />} to='/'>Agenda</NavLink>
                 <NavLink icon={<PeopleIcon className='text-white' style={{ fontSize: 40 }} />} to='/speakers'>Speakers</NavLink>
             </List>
-            <Divider class='my-2' />
-            <List>
-                <ListSubheader component="div" className='text-white'>
-                    {props.drawer.open && 'ADMIN TOOLS'}&zwnj;
+            <AccessControl rolesAllowed={[UserRoles.admin]} noAccessComponent={''} >
+                <Divider className='my-2' />
+                <List>
+                    <ListSubheader component="div" className='text-white'>
+                        {props.drawer.open && 'ADMIN TOOLS'}&zwnj;
                 </ListSubheader>
-                <NavLink icon={<PersonAddIcon className='text-white' style={{ fontSize: 40 }} />} to='/add-speaker'>Add Speaker</NavLink>
-                <NavLink icon={<AddLocationIcon className='text-white' style={{ fontSize: 40 }} />} to='/add-place'>Add Place</NavLink>
-                <NavLink icon={<AddBoxIcon className='text-white' style={{ fontSize: 40 }} />} to='/add-lecture'>Add Lecture</NavLink>
-            </List>
-            <Divider class='my-2' />
-            <List>
-                <NavLink icon={<LockIcon className='text-white' style={{ fontSize: 40 }} />} to='/signout'>Log out</NavLink>
+                    <NavLink icon={<PersonAddIcon className='text-white' style={{ fontSize: 40 }} />} to='/add-speaker'>Add Speaker</NavLink>
+                    <NavLink icon={<AddLocationIcon className='text-white' style={{ fontSize: 40 }} />} to='/add-place'>Add Place</NavLink>
+                    <NavLink icon={<AddBoxIcon className='text-white' style={{ fontSize: 40 }} />} to='/add-lecture'>Add Lecture</NavLink>
+                </List>
+            </AccessControl>
+            <Divider className='my-2' />
+            <List style={{ bottom: 0 }}>
+                {/* <NavLink icon={<AccountBoxRoundedIcon className='text-white' style={{ fontSize: 40 }} />} to='/profile'>Profile</NavLink> */}
+                <AccessControl rolesAllowed={[UserRoles.admin, UserRoles.standard]} noAccessComponent={''} >
+                    <NavLink icon={<LockIcon className='text-white' style={{ fontSize: 40 }} />} to='/signout'>Log out</NavLink>
+                </AccessControl>
+                <AccessControl rolesAllowed={[UserRoles.guest]} noAccessComponent={''} >
+                    <NavLink to='/signin'>Sing in</NavLink>
+                    <NavLink to='/signup'>Sing up</NavLink>
+                </AccessControl>
             </List>
         </Drawer>
     )

@@ -2,6 +2,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import signinUser from '../../Actions/signIn';
 import { connect } from 'react-redux';
+import { Helmet } from "react-helmet";
 
 import './style.css';
 import logo from '../../Images/buildstuffLogo.png'
@@ -33,6 +34,10 @@ class SignIn extends React.PureComponent {
 
         return (
             <div className='auth-wrap'>
+                <Helmet>
+                    <title>Sign in</title>
+                    <meta name="description" content="Sign in to Buildstuff" />
+                </Helmet>
                 <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
                     <img src={logo} className='logo' alt='logo' />
                     <fieldset className="form-group">

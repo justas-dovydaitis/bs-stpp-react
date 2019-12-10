@@ -6,6 +6,7 @@ body {
 a {
     color: white;
 }
+
 a:hover {
     text-decoration: none;
     color: inherit;
@@ -24,9 +25,16 @@ a:hover {
 .btn-primary {
     background-color: #F97268;
 }
-hr { 
-    background:none repeat scroll 0 0 #F97268;
-    margin:1em 0;
+
+hr {
+    background: none repeat scroll 0 0 #F97268;
+    margin: 1em 0;
     clear: both;
-    width:100%;
+    width: 100%;
+}
+
+.vertical-center {
+    position: absolute;
+    top: 50%;
+    transform: translateY( -50%);
 }

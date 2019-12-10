@@ -1,10 +1,10 @@
 import React from 'react';
 import { Editor } from 'react-draft-wysiwyg';
-// import { EditorState, Modifier } from 'draft-js';
 import draftToHTML from 'draftjs-to-html';
 import DateTimeRangePicker from '@wojtekmaj/react-datetimerange-picker';
 import Select from 'react-select';
 import { connect } from 'react-redux';
+import { Helmet } from 'react-helmet';
 // Actions
 import fetchApi from '../../../Actions/get';
 import postApi from '../../../Actions/post';
@@ -76,7 +76,7 @@ class CreateLectureForm extends React.Component {
             })
             .then((lecture) => {
                 this.state.selectedSpeakers.forEach(speaker => {
-                    this.props.postApi(`/lectures/${lecture._id}/speakers/${speaker.value}/`, {});
+                    this.props.postApi(`/speakers/${speaker.value}/lectures/${lecture.data._id}/`, {});
                 });
             })
             .catch(error => {
@@ -92,46 +92,58 @@ class CreateLectureForm extends React.Component {
     render = () => {
         console.log(this.state.starts)
         return (
-            <form onSubmit={this.handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="title">Title</label>
-                    <input className="form-control" id="title" name="title" type="text"
-                        onChange={(e) => this.setState({ name: e.target.value })} />
+            <div className='container'>
+                <Helmet>
+                    <title>Create Lecture</title>
+                    <meta name="description" content="Create lecture" />
+                </Helmet>
+                <div className='row'>
+                    <h1 className='text-uppercase my-5'>Create Lecture</h1>
                 </div>
-                <div className="form-group">
-                    <label htmlFor="shortDesc">Short description</label>
-                    <textarea className="form-control" id="shortDesc" name="shortDesc"
-                        onChange={(e) => this.setState({ shortDesc: e.target.value })}></textarea>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="fullDesc">Full description</label>
-                    <EditorComponent className="form-control" id='fullDesc' name='fullDesc'
-                        onContentStateChange={(newState) => { this.setState({ fullDesc: newState }) }} />
-                </div>
-                <div className="form-group">
-                    <label htmlFor='timeRange'>Duration</label>
-                    <DateTimeRangePicker className="form-control" id='timeRange' name='timeRange'
-                        value={this.state.dateRange}
-                        onChange={date => this.setState({ dateRange: date })} />
-                </div>
-                <div className='form-group'>
-                    <label htmlFor='speakers'>Speakers</label>
-                    <Select
-                        isMulti
-                        onChange={this.handleSpeakersChange}
-                        options={this.makeSpeakers()}
-                    />
-                </div>
+                <div className='row'>
+                    <form onSubmit={this.handleSubmit}>
 
-                <div className='form-group'>
-                    <label htmlFor='place'>Place</label>
-                    <Select
-                        onChange={(this.handlePlaceChange)}
-                        options={this.makePlaces()}
-                    />
+                        <div className="form-group">
+                            <label htmlFor="title">Title</label>
+                            <input className="form-control" id="title" name="title" type="text"
+                                onChange={(e) => this.setState({ name: e.target.value })} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="shortDesc">Short description</label>
+                            <textarea className="form-control" id="shortDesc" name="shortDesc"
+                                onChange={(e) => this.setState({ shortDesc: e.target.value })}></textarea>
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="fullDesc">Full description</label>
+                            <EditorComponent className="form-control" id='fullDesc' name='fullDesc'
+                                onContentStateChange={(newState) => { this.setState({ fullDesc: newState }) }} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor='timeRange'>Duration</label>
+                            <DateTimeRangePicker className="form-control" id='timeRange' name='timeRange'
+                                value={this.state.dateRange}
+                                onChange={date => this.setState({ dateRange: date })} />
+                        </div>
+                        <div className='form-group'>
+                            <label htmlFor='speakers'>Speakers</label>
+                            <Select
+                                isMulti
+                                onChange={this.handleSpeakersChange}
+                                options={this.makeSpeakers()}
+                            />
+                        </div>
+                        <div className='form-group'>
+                            <label htmlFor='place'>Place</label>
+                            <Select
+                                onChange={(this.handlePlaceChange)}
+                                options={this.makePlaces()}
+                            />
+                        </div>
+                        <button type='submit' className='btn btn-primary w-100'>Submit</button>
+
+                    </form>
                 </div>
-                <button type='submit' className='btn btn-primary w-100'>Submit</button>
-            </form>
+            </div>
         )
     }
 }
