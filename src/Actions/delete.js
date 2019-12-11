@@ -1,19 +1,22 @@
 import axios from 'axios';
-import { signoutUser } from './index';
+import setJWTexpiredVisibility from './setJWTexpiredVisibility';
 import { API_ROOT } from '../config';
 
-export default function apiDelete(slug, headers, id) {
+export default function apiDelete(slug, headers, ) {
     return async (dispatch) => {
-        return axios.delete(`${API_ROOT}${slug}${id}/`, {
+        return axios.delete(`${API_ROOT}${slug}`, {
             headers: {
                 ...headers,
-                Authorization: `JWT ${localStorage.getItem('token')}`,
+                Authorization: localStorage.getItem('accessToken'),
             }
-        }).then((response) => {
+        }
+        ).then((response) => {
+            debugger;
             console.log('POST', "Succeded", response.data);
         }).catch((error) => {
+            debugger;
             console.log(error);
-            if (error.response.status === 401) {
+            if (error.response && (error.response.status === 401)) {
                 dispatch(setJWTexpiredVisibility(true));
             }
         });

@@ -2,7 +2,8 @@ import { actionTypes } from '../Actions';
 const defaultState = {
     agendaPlaces: [],
     lectures: [],
-    currentLectureSpeakers: []
+    currentLectureSpeakers: [],
+    agendaActivePlace: {}
 }
 export const reducer = (state = defaultState, action) => {
     switch (action.type) {

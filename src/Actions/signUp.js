@@ -2,7 +2,6 @@ import axios from 'axios';
 import History from '../history.js';
 import jwt_decode from 'jwt-decode';
 import Cookie from 'js-cookie';
-import { actionTypes } from './index';
 import authError from './authError';
 import { API_ROOT } from '../config';
 

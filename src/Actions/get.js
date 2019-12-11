@@ -8,11 +8,12 @@ export default function apiGet(slug, headers, type) {
         return axios.get(`${API_ROOT}${slug}`, {
             headers: {
                 ...headers,
-                Authorization: `JWT ${localStorage.getItem('token')}`,
+                Authorization: `${localStorage.getItem('accessToken')}`,
             }
         }).then((response) => {
             console.log(type, 'Succeded', response.data);
             dispatch(apiStore(type, response.data));
+            return response.data;
         }).catch((error) => {
             if (error.response && error.response.status === 401) {
                 dispatch(setJWTexpiredVisibility(true));

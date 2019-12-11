@@ -16,6 +16,7 @@ import CreateSpeaker from '../Components/Admin/Forms/CreateSpeaker';
 import CreatePlace from '../Components/Admin/Forms/CreatePlace';
 
 import AccessControl, { UserRoles } from '../Components/AccessControl';
+import EditLecture from '../Components/Admin/Forms/EditLecture';
 
 
 
@@ -58,6 +59,7 @@ const Routes = () => {
                 <Route exact path="/add-speaker" component={CreateSpeaker} />
                 <Route exact path="/add-lecture" component={CreateLecture} />
                 <Route exact path="/add-place" component={CreatePlace} />
+                <Route exact path="/edit-lecture/:id" component={EditLecture} />
             </AccessControl>
 
         </App >

@@ -9,8 +9,8 @@ export default function apiPush(slug, headers, body) {
             headers: {
                 ...headers,
                 'Content-Type': 'application/json',
-                credentials: 'include'
-                // Authorization: `JWT ${localStorage.getItem('token')}`,
+                credentials: 'include',
+                Authorization: `${localStorage.getItem('accessToken')}`,
             },
             crossDomain: true
         }).then((response) => {
@@ -19,7 +19,7 @@ export default function apiPush(slug, headers, body) {
             return response;
         }).catch((error) => {
             console.log(error);
-            if (error.response.status === 401) {
+            if ( error.response && (error.response.status === 401)) {
                 dispatch(setJWTexpiredVisibility(true));
             }
         });
