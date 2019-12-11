@@ -55,8 +55,10 @@ class EditLectureForm extends React.Component {
         }
         let { id } = this.props.match.params;
         this.id = id;
+
         this.makeSpeakers = this.makeSpeakers.bind(this);
     }
+
     componentDidMount() {
         if (!this.props.lecture || this.props.lecture._id !== this.id) {
             this.props.fetchApi(`/lectures/${this.id}`, {}, AC.SET_CURRENT_LECTURE)
@@ -87,7 +89,7 @@ class EditLectureForm extends React.Component {
                 });
             this.props.fetchApi(`/lectures/${this.id}/place/`, {}, AC.CHANGE_ACTIVE_PLACE)
                 .then((place) => {
-                    this.setState({ selectedPlace: { value: place._id, label: place.name } })
+                    this.setState({ selectedPlace: { value: this.props.defaultPlace._id, label: this.props.defaultPlace.name } })
                 });
             this.props.fetchApi(`/speakers/`, {}, AC.SET_SPEAKERS)
                 .then((speakers) => { });
@@ -130,36 +132,30 @@ class EditLectureForm extends React.Component {
         this.props.updateApi(`/lectures/${this.id}`, {}, JSON.stringify(body))
             .then((lecture) => {
                 // console.log("WOW", lecture)
-                if (this.state.selectedPlace.value !== this.props.defaultPlace._id) {
-                    debugger;
-                    this.props.postApi(`/places/${this.state.selectedPlace.value}/lectures/${this.props.lecture._id}/`, {});
-                    this.props.deleteApi(`/places/${this.props.defaultPlace._id}/lectures/${this.props.lecture._id}/`);
-                }
+                console.log(this.state.selectedPlace, this.props.defaultPlace, this.state.selectedPlace.value !== this.props.defaultPlace._id)
+
+                this.props.postApi(`/lectures/${this.props.lecture._id}/place/${this.state.selectedPlace.value}`, {});
+                // this.props.deleteApi(`/places/${this.props.defaultPlace._id}/lectures/${this.props.lecture._id}/`);
+
                 return lecture;
             })
             .then((lecture) => {
-                this.props.defaultSpeakers.forEach((def) => {
-                    let del = true;
+                console.log(this.props.defaultSpeakers, this.state.selectedSpeakers);
+                if (this.props.defaultSpeakers !== 0) {
+                    this.props.defaultSpeakers.forEach((def) => {
+                        this.props.deleteApi(`/speakers/${def._id}/lectures/${this.props.lecture._id}/`)
+                    })
+                }
+                return lecture
+            })
+            .then((res) => {
+                if (this.state.selectedSpeakers.length !== 0) {
                     this.state.selectedSpeakers.forEach((sel) => {
-                        if (def._id === sel.value) del = false;
-                    });
-                    if (del) {
-                        this.props.deleteApi(`/speakers/${def._id}/lectures/${this.props.lecture._id}/`);
-                    }
-                });
-                this.state.selectedSpeakers.forEach((sel) => {
-                    let add = true;
-                    this.state.defaultSpeakers.forEach(def => {
-                        if (def._id === sel.value) add = false;
-                    });
-                    if (add) {
                         this.props.postApi(`/speakers/${sel.value}/lectures/${this.props.lecture._id}/`);
-                    }
-                });
-            })
-            .catch(error => {
-                console.log(error);
-            })
+                    });
+                }
+            });
+
     }
     handleSpeakersChange = async (newValue) => {
         await this.setState({ selectedSpeakers: newValue })
